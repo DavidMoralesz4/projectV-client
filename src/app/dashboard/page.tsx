@@ -1,14 +1,28 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/authContext";
 import ProtectedComponent from "@/components/protectedComponent/protected-component";
 import ProductCard from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getAllProds } from "../api/data";
 
 function DashboardPage() {
+  const [products, setProducts] = useState([])
+
   const auth = useContext(AuthContext);
+
+
+  useEffect(() => {
+    const fetchProducts = async() => {
+      const response = await getAllProds()
+      setProducts(response.data)
+    }
+
+    fetchProducts()
+  },[])
+
 
   return (
     <ProtectedComponent>
@@ -28,18 +42,11 @@ function DashboardPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 2xl:grid-cols-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {
+            products.map((prod, index) => {
+              <ProductCard key={index}  prod={prod.name} />
+            })
+          }
         </div>
       </div>
     </ProtectedComponent>

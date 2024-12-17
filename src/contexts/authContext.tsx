@@ -14,6 +14,7 @@ export const AuthContext = createContext<IContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: ChilPros) => {
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null)
   const [isAuthenticate, setIsAuthenticate] = useState(false);
 
   const signin = async (user: IUserProps) => {
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }: ChilPros) => {
       try {
           const response = await axios.get('http://localhost:3001/api/dashboard', {withCredentials: true})
           setUser(response.data.data.username)
+          setEmail(response.data.data.email)
           setIsAuthenticate(true)
       } catch {
         setIsAuthenticate(false)
@@ -48,7 +50,7 @@ export const AuthProvider = ({ children }: ChilPros) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticate, signin, logout }}
+      value={{ user, isAuthenticate, signin, logout, email }}
     >
       {children}
     </AuthContext.Provider>

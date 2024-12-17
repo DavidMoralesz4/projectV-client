@@ -1,15 +1,15 @@
-import { getTechData } from "@/app/api/data";
+import { getHomeData } from "@/app/api/data";
 import ProductCard from "@/components/product-card";
 import React from "react";
 
-async function TechnologyPage() {
-  const data = await getTechData();
+async function HomePage() {
+  const homeData = await getHomeData()
 
   return (
     <>
-      <div className="text-2xl">Bienvenido a Tecnología</div>
+      <div className="text-2xl">Bienvenido a Hogar!</div>
 
-      {data.length === 0 ? (
+      {homeData.length === 0 ? (
         // Mostrar mensaje si no hay productos
         <div className="text-lg text-center text-gray-500">
           No hay productos disponibles en esta categoría.
@@ -17,7 +17,7 @@ async function TechnologyPage() {
       ) : (
         // Mostrar productos si hay datos
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 2xl:grid-cols-5">
-          {data.map((prods, index) => (
+          {homeData.map((prods, index) => (
             <ProductCard
               key={index}
               nombre={prods.nombre}
@@ -32,4 +32,4 @@ async function TechnologyPage() {
   );
 }
 
-export default TechnologyPage;
+export default HomePage;

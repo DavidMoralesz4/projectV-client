@@ -3,6 +3,7 @@ import ProductCard from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getAllProds } from "../api/data";
+import { ModalForm } from "@/components/modal-form";
 
 async function DashboardPage() {
   const data = await getAllProds();
@@ -21,22 +22,32 @@ async function DashboardPage() {
                 Buscar
               </Button>
             </div>
-            <Button className="truncate text-xs w-[200px]">
-              Subir productos
-            </Button>
+            <ModalForm/>
           </nav>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 2xl:grid-cols-5">
-          {data.map((data, index) => (
-            <ProductCard
-              key={index}
-              nombre={data.nombre}
-              imagen={data.imagen}
-              descripcion={data.descripcion}
-              precio={data.precio}
-            />
-          ))}
+          {data.length > 0 ? (
+            data.map((data, index) => (
+              <ProductCard
+                key={index}
+                nombre={data.nombre}
+                imagen={data.imagen}
+                descripcion={data.descripcion}
+                precio={data.precio}
+              />
+            ))
+          ) : (
+            <div className="flex h-16 shrink-20 items-center gap-2">
+              <p
+                className="text-center flex flex-1 flex-col gap-4 p-4 pt-0
+            font-sans font-medium
+            "
+              >
+                No hay productos para mostrar.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </ProtectedComponent>

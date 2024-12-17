@@ -36,44 +36,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-    address: "trans 3 #2-02",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-    address: "trans 3 #2-02",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-    address: "trans 3 #2-02",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-    address: "trans 3 #2-02",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-    address: "trans 3 #2-02",
-  },
-];
-
 export type Payment = {
   id: string;
   amount: number;
@@ -152,7 +114,7 @@ export const columns: ColumnDef<Payment>[] = [
       const formatted = new Intl.NumberFormat("en-CO", {
         style: "currency",
         currency: "COP",
-        minimumFractionDigits: 3
+        // minimumFractionDigits: 3
       }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;

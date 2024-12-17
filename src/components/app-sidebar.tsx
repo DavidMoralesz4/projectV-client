@@ -52,15 +52,15 @@ const data = {
         },
         {
           title: "Ropa",
-          url: "#",
+          url: "/dashboard/clothes",
         },
         {
           title: "Belleza",
-          url: "#",
+          url: "/dashboard/beauty",
         },
         {
           title: "Hogar",
-          url: "#",
+          url: "/dashboard/home",
         },
       ],
     },

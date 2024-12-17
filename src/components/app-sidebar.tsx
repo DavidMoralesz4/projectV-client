@@ -44,11 +44,11 @@ const data = {
       items: [
         {
           title: "Zapatos",
-          url: "#",
+          url: "/dashboard/shoes",
         },
         {
           title: "Tecnologia",
-          url: "#",
+          url: "/dashboard/technology",
         },
         {
           title: "Ropa",

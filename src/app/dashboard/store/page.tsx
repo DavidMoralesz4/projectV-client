@@ -1,5 +1,6 @@
 "use client";
 
+import { DataTableDemo } from "@/components/orders-table";
 // import { createProd, uploadCSV } from "@/app/api/auth";
 // import { createProd, IProduct } from "@/app/api/auth";
 import SalesTable from "@/components/sales-table";
@@ -50,7 +51,7 @@ function StorePage() {
     <>
       <div>
         <div className="space-y-5">
-          <SalesTable />
+        <DataTableDemo/>
         </div>
 
 

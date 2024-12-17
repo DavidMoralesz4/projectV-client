@@ -11,24 +11,26 @@ import {
 type CardProps = React.ComponentProps<typeof Card>
 
 export default function ProductCard({ className, ...props }: CardProps) {
+
+
   return (
     <Card className={cn("w-[280px] h-[380px]", className)} {...props}>
       <CardHeader className="">
-        <CardTitle>Zapatillas Deportivas</CardTitle>
+        <CardTitle>{props.nombre}</CardTitle>
       </CardHeader>
-      <CardContent className="h-[260px]">
-        <div className="aspect-square relative h-[160px]">
+      <CardContent className="h-[240px]">
+        <div className="aspect-square relative h-[120px]">
           <img
-            src="/placeholder.svg?height=300&width=300"
+            src={props.imagen}
             alt="Zapatillas Deportivas"
             className="rounded-md object-cover"
           />
         </div>
         <div className="flex justify-between items-center">
-          <div className="text-2xl font-bold">$99.99</div>
+          <div className="text-2xl font-bold">{props.precio}</div>
         </div>
         <div className="text-sm text-muted-foreground">
-          Disponible en varios colores y tallas. Suela de goma duradera y parte superior transpirable.
+         {props.descripcion}
         </div>
       </CardContent>
       <CardFooter>

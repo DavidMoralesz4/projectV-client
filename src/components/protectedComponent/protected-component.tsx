@@ -11,10 +11,10 @@ type ChilProps = {
 function ProtectedComponent({children}: ChilProps) {
     const auth = useContext(AuthContext)
 
-    if(!auth?.isAuthenticate) redirect('/login')
+    if(!auth?.isAuthenticate) redirect('/login');
+        
     // useEffect(() => {
     //     if(!auth?.isAuthenticate) redirect('/')
-
 
     // }, [auth?.isAuthenticate]) 
 

@@ -13,8 +13,6 @@ export const fetchLogin = (values: IUserProps) => appClient.post(`${API}/login`,
 
 export const logoutFn = () => appClient.post(`${API}/logout`);
 
-
-
 // export const fetchDashboard = () => appClient.get(`${API}/dashboard`)
 
 //  const uploadCSV = async (file: string) => {

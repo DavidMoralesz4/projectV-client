@@ -1,12 +1,40 @@
+"use client";
+
 import ProtectedComponent from "@/components/protectedComponent/protected-component";
 import ProductCard from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getAllProds } from "../api/data";
 import { ModalForm } from "@/components/modal-form";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { IProduct } from "../api/data";
 
-async function DashboardPage() {
-  const data = await getAllProds();
+function DashboardPage() {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/products", {
+          withCredentials: true, // Si usas cookies para autenticación
+        });
+        setProducts(response.data);
+        setMessage(response.data.menssage);
+      } catch (err: any) {
+        setError(err.menssage);
+        console.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
+
+  if (loading) return <p>Cargando productos...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <ProtectedComponent>
@@ -22,33 +50,27 @@ async function DashboardPage() {
                 Buscar
               </Button>
             </div>
-            <ModalForm/>
+            <ModalForm />
           </nav>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 2xl:grid-cols-5">
-          {data.length > 0 ? (
-            data.map((data, index) => (
+        {products.length === 0 ? (
+          // Mostrar mensaje si no hay productos
+          <div className="text-lg text-center text-gray-500">{message}</div>
+        ) : (
+          // Mostrar productos si hay datos
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 2xl:grid-cols-5">
+            {products.map((prods, index) => (
               <ProductCard
-                key={index}
-                nombre={data.nombre}
-                imagen={data.imagen}
-                descripcion={data.descripcion}
-                precio={data.precio}
+                key={prods._id}
+                nombre={prods.nombre}
+                descripcion={prods.descripcion}
+                imagen={prods.imagen}
+                precio={prods.precio}
               />
-            ))
-          ) : (
-            <div className="flex h-16 shrink-20 items-center gap-2">
-              <p
-                className="text-center flex flex-1 flex-col gap-4 p-4 pt-0
-            font-sans font-medium
-            "
-              >
-                No hay productos para mostrar.
-              </p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </ProtectedComponent>
   );

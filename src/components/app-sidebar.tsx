@@ -28,6 +28,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ModeToggle } from "./mode-togle";
+import ClothingBrandFilter from "./ClothingBrandFilter";
 
 const data = {
   user: {
@@ -167,8 +168,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
-        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+        <ClothingBrandFilter />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

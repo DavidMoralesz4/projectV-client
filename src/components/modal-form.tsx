@@ -11,7 +11,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function ModalForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -35,24 +37,18 @@ export function ModalForm() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(
-        "http://localhost:3001/api/products/create/csv",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await axios.post(
+        "http://localhost:3001/api/products/create/csv", formData);
 
-      if (!response.ok) {
-        throw new Error("Error al subir el archivo");
+      if (!response) {
+        toast.error('No hay archivo')
       }
-
-      await response.json();
-      // console.log(data.products);
-      setMessage(`¡Archivo subido con éxito! Productos creados:`);
-    } catch (error) {
-      setMessage("Ocurrió un error al subir el archivo.");
-      console.log(error);
+      toast.success(response.data.menssage)
+      
+    } catch (error: any) {
+      if(error.response.status === 500) {
+        toast.error(error.response.data.message)
+      }
     }
   };
 

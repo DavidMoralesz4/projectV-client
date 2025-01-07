@@ -1,11 +1,15 @@
 import axios, { isAxiosError } from "axios";
+import appClient from "./axios";
 
-export interface IData {
+export interface IProduct {
+  _id: string;
   nombre: string;
+  imagen: string
   descripcion: string;
-  precio: string;
-  imagen: string;
+  unidad: number
+  precio: number;
 }
+
 type ClientType = {
   email: string
   address: string
@@ -19,30 +23,31 @@ export type Order = {
 
 // Configurar Axios para Enviar Cookies
 // Habilita el envío de cookies en cada solicitud agregando la opción withCredentials.
-const API = "http://localhost:3001/api";
-const appClient = axios.create({
-  baseURL: `${API}`,
-  withCredentials: true,
-});
 
-export const getAllProds = async (): Promise<IData[]> => {
+// const appClient = axios.create({
+//   baseURL: `${API}`,
+//   withCredentials: true,
+// });
+
+export const getAllProds = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products`);
-    return response.data;
+    const response = await appClient.get(`/products`);
+    return response.data.products;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 404) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      console.warn("No autorizado. Token inválido o faltante.");
       return [];
     }
     throw error;
   }
 };
 
-export const getTechData = async (): Promise<IData[]> => {
+export const getTechData = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products/Tecnologia`);
+    const response = await appClient.get(`/products/Tecnologia`);
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 404) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
       // Devuelve un array vacío si no hay productos
       return [];
     }
@@ -50,9 +55,9 @@ export const getTechData = async (): Promise<IData[]> => {
   }
 };
 
-export const getShoesData = async (): Promise<IData[]> => {
+export const getShoesData = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products/Zapatos`);
+    const response = await appClient.get(`/products/Zapatos`);
     return response.data;
   } catch (error) {
     /*
@@ -62,7 +67,7 @@ export const getShoesData = async (): Promise<IData[]> => {
   */
 
     // si el error es de axios y el estado es 404 entonces realiza lo sig=>
-    if (isAxiosError(error) && error.response?.status === 404) {
+    if (isAxiosError(error) && error.response?.status === 401) {
       // retorno un array
       return [];
     }
@@ -71,12 +76,12 @@ export const getShoesData = async (): Promise<IData[]> => {
   }
 };
 
-export const getClothesData = async (): Promise<IData[]> => {
+export const getClothesData = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products/Ropa`);
+    const response = await appClient.get(`/products/Ropa`);
     return response.data;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 404) {
+    if (isAxiosError(error) && error.response?.status === 401) {
       return [];
     }
 
@@ -84,12 +89,12 @@ export const getClothesData = async (): Promise<IData[]> => {
   }
 };
 
-export const getHomeData = async (): Promise<IData[]> => {
+export const getHomeData = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products/Hogar`);
+    const response = await appClient.get(`}/products/Hogar`);
     return response.data;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 404) {
+    if (isAxiosError(error) && error.response?.status === 401) {
       return [];
     }
 
@@ -98,12 +103,12 @@ export const getHomeData = async (): Promise<IData[]> => {
 };
 
 
-export const getBeautyData = async (): Promise<IData[]> => {
+export const getBeautyData = async (): Promise<IProduct[]> => {
   try {
-    const response = await appClient.get(`${API}/products/Belleza`);
+    const response = await appClient.get(`/products/Belleza`);
     return response.data;
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 404) {
+    if (isAxiosError(error) && error.response?.status === 401) {
       return [];
     }
 
